@@ -11,7 +11,7 @@ export const Config = {
      // restart game server and true if you do
      restartApi: true,
      // Set to true if you want to use Satisfactory Experimental
-     useExperimentalBuild: false,
+     useExperimentalBuild: true,
 
      // optional parameters
 
