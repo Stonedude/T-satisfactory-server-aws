@@ -65,13 +65,17 @@ export class ServerHostingStack extends Stack {
     securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(7777), "Game port TCP ipv4")
     securityGroup.addIngressRule(ec2.Peer.anyIpv6(), ec2.Port.udp(7777), "Game port UPD ipv6")
     securityGroup.addIngressRule(ec2.Peer.anyIpv6(), ec2.Port.tcp(7777), "Game port TCP ipv6")
+    //Experimental ports for U1.1 https://questions.satisfactorygame.com/post/67ebe6fa6b7c5731963622a9
+    securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(8888), "Experimental Game port")
+    
 
     securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.udp(15000), "Beacon port")
     securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.udp(15777), "Query port")
+    securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(27777), "Experimental port")
 
     const server = new ec2.Instance(this, `${prefix}Server`, {
       // 4 vCPU, 16 GB RAM should be enough for most factories
-      instanceType: new ec2.InstanceType("r7i.xlarge"),
+      instanceType: new ec2.InstanceType("r6i.large"),
       // get exact ami from parameter exported by canonical
       // https://discourse.ubuntu.com/t/finding-ubuntu-images-with-the-aws-ssm-parameter-store/15507
       machineImage: ec2.MachineImage.fromSsmParameter("/aws/service/canonical/ubuntu/server/20.04/stable/current/amd64/hvm/ebs-gp2/ami-id"),
